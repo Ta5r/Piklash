@@ -80,7 +80,8 @@ router.post("/signin", async (req, res) => {
 
 router.get('/profile',authenticate,(req,res)=>{
   console.log("Hello About");
-  res.send("Hello from About Route from SERVER");
+  console.log(req.rootUser);
+  res.send(req.rootUser);
 });
 
 module.exports = router;
