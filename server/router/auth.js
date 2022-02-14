@@ -1,5 +1,9 @@
+const fs = require('fs');
 const jwt = require("jsonwebtoken");
 const express = require("express");
+const app = express();
+const multer = require("multer");
+const upload = multer({dest: 'data/imgs/'});
 const router = express.Router();
 const User = require("../model/userSchema");
 const authenticate = require("../middleware/authenticate");
@@ -9,22 +13,42 @@ router.get("/", (req, res) => {
   res.send("<br>Hello World from PIKLASH");
 });
 
+router.post("/testRoute", async (req, res) => {
+  console.log("GOT REQ - "+req);
+  const { name, email, phone, password, cpassword, testT, myFilename, imgFD} = req.body;
+  console.log();
+  console.log("HELLO from /testRoute");
+  console.log("GOT NAME - "+name);
+  console.log("GOT EMAIL - "+email);
+  console.log("GOT PHONE - "+phone);
+  console.log("GOT PASSWORD - "+password);
+  console.log("GOT cPASSWORD - "+cpassword);
+  console.log("GOT testT - "+testT);
+  console.log("GOT FILENAME"+myFilename);
+  // upload.single(imgFD);
+  fs.open('mynewfile2.png', 'w', function (err, file) {
+    if (err) throw err;
+    console.log('Saved!');
+  });
+  console.log("Action performed");
+});
+
 router.post("/register", async (req, res) => {
   const { name, email, phone, password, cpassword, myFile, testT } = req.body;
   const img = myFile;
-  console.log("MyFile is "+myFile.name);
-  console.log(testT);
-  console.log("MyFile is "+Object.values(myFile));
-  const image =await JSON.stringify(img);
-  const {imgname} = img;
-  console.log("zzz - "+imgname);
-  console.log("BACKEND IMG WE img -> "+img);
-  console.log("BACKEND IMG WE img[0] -> "+img[0]);
-  console.log("BACKEND IMG WE img[0] Obj -> "+Object.apply(img[0]));
-  console.log("BACKEND IMG WE img[0].name -> "+img[0].name);
-  console.log("BACKEND IMG WE image -> "+image);
-  console.log("BACKEND IMG WE req.body-> "+req.body);
-  console.log("BACKEND IMG WE req.body-> "+req.body);
+  // console.log("MyFile is "+myFile.name);
+  // console.log(testT);
+  // console.log("MyFile is "+Object.values(myFile));
+  // const image =await JSON.stringify(img);
+  // const {imgname} = img;
+  // console.log("zzz - "+imgname);
+  // console.log("BACKEND IMG WE img -> "+img);
+  // console.log("BACKEND IMG WE img[0] -> "+img[0]);
+  // console.log("BACKEND IMG WE img[0] Obj -> "+Object.apply(img[0]));
+  // console.log("BACKEND IMG WE img[0].name -> "+img[0].name);
+  // console.log("BACKEND IMG WE image -> "+image);
+  // console.log("BACKEND IMG WE req.body-> "+req.body);
+  // console.log("BACKEND IMG WE req.body-> "+req.body);
   //validation
   if (!name || !email || !phone || !password || !cpassword) {
     return res.status(422).json({ error: "plz fill all details" });

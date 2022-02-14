@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+const axios = require("axios").default;
 
 const Register = () => {
   const {
@@ -12,37 +13,71 @@ const Register = () => {
     // console.log("testing contents of img"+data.img[0]);
     // -> object File
     const { name, email, phone, password, cpassword, img } = data;
-    const dataghj = new FormData();
-    dataghj.append("file", img);
-    // console.log("hhhh - "+dataghj);
-    // ->object FormData
-    // console.log("kn kslklks "+img[0]);
-    // -> object File
-    // console.log(" v sm "+Object.values(dataghj));
-    // -> nothin
-    // console.log("kjnsdckj "+dataghj.values()); 
-    // ->object iterator
+    // const dataghj = new FormData();
+    // dataghj.append("file", img);
     console.log("img --->  " + data.img[0].name);
     console.log("img --->  " + data.img[0]);
     const myFile = img[0];
     console.log(myFile);
-    const testT ="fuck off bitch";
-    const res = await fetch("/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    console.log(myFile.name);
+    const testT = "test string";
+    
+    // const res = await fetch("/register", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     name,
+    //     email,
+    //     phone,
+    //     password,
+    //     cpassword,
+    //     myFile,
+    //     testT,
+    //   }),
+    // });
+
+    const imgFD = new FormData();
+    imgFD.append("img",myFile,myFile.name);
+    const myFilename = myFile.name;
+    
+    console.log("qwerty0");
+
+
+    // const res = await fetch("/testRoute", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     name,
+    //     email,
+    //     phone,
+    //     password,
+    //     cpassword,
+    //     myFile,
+    //     testT,
+    //   }),
+    // });
+    
+    const res = await axios.post("/testRoute", {
         name,
         email,
         phone,
         password,
         cpassword,
-        myFile,
         testT,
-      }),
+        myFilename,
+        imgFD
     });
+
+    console.log("qwerty1");
+    console.log("qwerty"+res);
+    console.log(JSON.stringify(res));
+
     const dat = await res.json();
+    console.log("data dat : "+dat);
     if (dat.status === "422" || !dat) {
       console.log("Registration Failed");
     } else {
@@ -74,10 +109,7 @@ const Register = () => {
         {...register("cpassword", {})}
       />
       <br />
-      <input
-        type="file"
-        {...register("img", {})}
-      />
+      <input type="file" {...register("img", {})} />
       <br />
       <input type="submit" />
     </form>
