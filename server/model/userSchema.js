@@ -33,10 +33,10 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-  // image:{
-  //   type: String,
-  //   required: true,
-  // },
+  image:{
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.methods.generateAuthToken = async function () {

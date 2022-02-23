@@ -3,7 +3,8 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const app = express();
 const multer = require("multer");
-const upload = multer({dest: 'data/imgs/'});
+const path = require("path");
+// const upload = multer({dest: 'data/imgs/'});
 const router = express.Router();
 const User = require("../model/userSchema");
 const authenticate = require("../middleware/authenticate");
@@ -33,9 +34,34 @@ router.post("/testRoute", async (req, res) => {
   console.log("Action performed");
 });
 
-router.post("/register", async (req, res) => {
-  const { name, email, phone, password, cpassword, myFile, testT } = req.body;
-  const img = myFile;
+const storageDir = path.join(__dirname,'backend','../..','data');
+console.log(storageDir,"directory fu");
+
+const storage = multer.diskStorage({
+    destination : (req,file,cb) => {
+        console.log("lol",file);
+        cb(null,storageDir);
+    },
+    filename : (req,file,cb) => {
+        console.log(file,"hello");
+        cb(null,+ Date.now()+path.extname(file.originalname));
+    }
+});
+
+console.log(storage,"storage");
+
+const upload = multer({
+    dest:"uploads/"
+})
+
+router.post("/register",upload.single('img'), async (req, res) => {
+  const { name, email, phone, password, cpassword} = req.body;
+  console.log(name,"name");
+  // const img = myFile;
+  const url = req.protocol+"://"+req.get("host");
+  console.log(req.file,"url of thr file");
+
+
   // console.log("MyFile is "+myFile.name);
   // console.log(testT);
   // console.log("MyFile is "+Object.values(myFile));
@@ -67,9 +93,9 @@ router.post("/register", async (req, res) => {
         phone,
         password,
         cpassword,
-        // img,
+        image:url+"/public/"+req.file
       });
-      console.log("test fetch api for IMG -> "+img);
+      // console.log("test fetch api for IMG -> "+img);
       await user.save();
 
       res.status(201).json({ message: "user registered successfully" });
