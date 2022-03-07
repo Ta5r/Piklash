@@ -1,10 +1,13 @@
-const mongoose = require("mongoose");
-// const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+// import { Schema, model } from "mongoose";
+// import { sign } from "jsonwebtoken";
+import pkg from 'mongoose';
+import jwt from 'jsonwebtoken';
+const { Schema, model } = pkg;
+const { sign } = jwt;
 
 const SECRET_KEY = "OWMRWLERTJFSNCYJANCSFGHASXZRWQURCVSFDDHJ";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -33,6 +36,7 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  selectedFile: String,
   // image:{
   //   type: String,
   //   required: true,
@@ -41,7 +45,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateAuthToken = async function () {
   try {
-    let token = jwt.sign({ _id: this._id }, SECRET_KEY);
+    let token = sign({ _id: this._id }, SECRET_KEY);
     this.tokens = this.tokens.concat({token:token});
     await this.save();
     return token;
@@ -52,5 +56,5 @@ userSchema.methods.generateAuthToken = async function () {
   }
 };
 
-const User = mongoose.model("USER", userSchema);
-module.exports = User;
+const User = model("USER", userSchema);
+export default User;

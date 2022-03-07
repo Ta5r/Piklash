@@ -1,6 +1,11 @@
-var express = require("express");
+// var express = require("express");
+import express from 'express';
+import cors from 'cors';
 var app = express();
-require("./db/conn");
+import router from '../server/router/auth.js';
+// require("./db/conn");
+import "../server/db/conn.js";
+app.use(cors());
 app.use(express.json());
-app.use(require("./router/auth"));
+app.use(router);
 app.listen(5000);

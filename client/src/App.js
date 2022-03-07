@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import Signin from './pages/Signin';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-
+// import AddImage from './pages/AddImage'
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
     <Route  path="/login" element={<Signin />} />  
     <Route path="/register" element={<Register />} />  
     <Route path="/profile" element={<Profile />} />  
+    {/* <Route path="/add-img" element={<AddImage />} />   */}
     </Routes>
    </BrowserRouter>
   );
