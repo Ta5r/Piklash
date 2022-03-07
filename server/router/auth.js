@@ -4,9 +4,6 @@ const { Router } = pkg;
 const app = express();
 const router = Router();
 import User from "../model/userSchema.js";
-import pkg2 from '../model/userSchema.js';
-const { findOne } = pkg2;
-
 
 import authenticate from "../middleware/authenticate.js";
 import "../db/conn.js";
@@ -42,7 +39,7 @@ router.post("/register", async (req, res) => {
     return res.status(422).json({ error: "file not recieved" });
   }
   try {
-    const userExist = await findOne({ email: email });
+    const userExist = await User.findOne({ email: email });
 
     if (userExist) {
       return res.status(422).json({ error: "user already exists" });
@@ -73,7 +70,7 @@ router.post("/signin", async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ error: "EMAIL / PASSWORD required" });
     } else {
-      const userLogin = await findOne({ email: email });
+      const userLogin = await User.findOne({ email: email });
 
       if (userLogin) {
         let isMatch = false;
