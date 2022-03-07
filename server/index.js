@@ -6,6 +6,6 @@ import router from '../server/router/auth.js';
 // require("./db/conn");
 import "../server/db/conn.js";
 app.use(cors());
-app.use(express.json());
+app.use(express.json({limit:"5mb"}));
 app.use(router);
 app.listen(5000);

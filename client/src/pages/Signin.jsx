@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 const Signin = () => {
   const {
     register,
-    handleSubmit,
-    formState: { errors },
+    handleSubmit
   } = useForm();
   const navigate = useNavigate();
   const onSubmit = async (data) => {
@@ -21,7 +20,7 @@ const Signin = () => {
       }),
     });
     const dat = await res.json();
-    if (dat.status === "400" || res.status == 400 || !dat) {
+    if (dat.status === "400" || res.status === 400 || !dat) {
       console.log("Login Failed");
     } else {
       console.log("Login Successful :)");

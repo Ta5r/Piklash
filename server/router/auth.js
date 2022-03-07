@@ -4,8 +4,8 @@ const { Router } = pkg;
 const app = express();
 const router = Router();
 import User from "../model/userSchema.js";
-import pkg2 from '../model/userSchema.js';
-const { findOne } = pkg2;
+// import pkg2 from '../model/userSchema.js';
+// const { findOne } = pkg2;
 
 
 import authenticate from "../middleware/authenticate.js";
@@ -97,17 +97,6 @@ router.post("/signin", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-  }
-});
-
-router.post("/temp", async (req,res)=>{
-  try {
-    const { id } = req.body;
-    console.log("Recieved id : "+id);
-  }
-  catch(e)
-  {
-    console.log(e);
   }
 });
 

@@ -7,18 +7,7 @@ import User from "../model/userSchema.js";
 
 const Authenticate = async (req, res, next) => {
   try {
-    // var get_cookies = function(request) {
-    //   var cookies = {};
-    //   request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
-    //     var parts = cookie.match(/(.*?)=(.*)$/)
-    //     cookies[ parts[1].trim() ] = (parts[2] || '').trim();
-    //   });
-    //   return cookies;
-    // };
-    // console.log("hmhmhmhm --->  "+get_cookies[])
-
     console.log(" TOKEN READ ___ :  "+req.headers.cookie);
-    // console.log(" TOKEN READ2 ___ :  "+req.cookies);
 
     const text = ""+req.headers.cookie;
     let len = text.length;
