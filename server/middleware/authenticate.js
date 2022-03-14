@@ -1,12 +1,10 @@
 import jwt from 'jsonwebtoken';
 const { verify } = jwt;
 import User from "../model/userSchema.js";
-// var app = express();
-// app.use(cookieParser());
 
 const Authenticate = async (req, res, next) => {
   try {
-    console.log(" TOKEN READ ___ :  "+req.headers.cookie);
+    // console.log(" TOKEN READ ___ :  "+req.headers.cookie);
 
     const text = ""+req.headers.cookie;
     let len = text.length;
@@ -14,7 +12,7 @@ const Authenticate = async (req, res, next) => {
 
     const token = resultStr;
 
-    console.log("TOKEN __  :  !-- " + token+" --!");
+    // console.log("TOKEN __  :  !-- " + token+" --!");
 
     const SECRET_KEY = "OWMRWLERTJFSNCYJANCSFGHASXZRWQURCVSFDDHJ";
     const verifyToken = verify(token, SECRET_KEY);

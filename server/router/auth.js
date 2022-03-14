@@ -4,30 +4,12 @@ const { Router } = pkg;
 const app = express();
 const router = Router();
 import User from "../model/userSchema.js";
-// import pkg2 from '../model/userSchema.js';
-// const { findOne } = pkg2;
-
 
 import authenticate from "../middleware/authenticate.js";
 import "../db/conn.js";
 
 router.get("/", (req, res) => {
   res.send("<br>Hello World from PIKLASH");
-});
-
-router.post("/testRoute", async (req, res) => {
-  console.log("DIR NAME -->"+ __dirname);
-  console.log("GOT REQ - "+req);
-  console.log("GOT REQ - "+req.body);
-  const { name, email, phone, password, cpassword} = req.body;
-  console.log();
-  console.log("HELLO from /testRoute");
-  console.log("GOT NAME - "+name);
-  console.log("GOT EMAIL - "+email);
-  console.log("GOT PHONE - "+phone);
-  console.log("GOT PASSWORD - "+password);
-  console.log("GOT cPASSWORD - "+cpassword);
-  res.end('ok');
 });
 
 router.post("/register", async (req, res) => {
@@ -58,7 +40,7 @@ router.post("/register", async (req, res) => {
         selectedFile
       });
       await user.save();
-
+      console.log("message: user registered successfully");
       res.status(201).json({ message: "user registered successfully" });
     }
   } catch (err) {
@@ -74,7 +56,6 @@ router.post("/signin", async (req, res) => {
       return res.status(400).json({ error: "EMAIL / PASSWORD required" });
     } else {
       const userLogin = await User.findOne({ email: email });
-
       if (userLogin) {
         let isMatch = false;
         if (password == userLogin.password) {
@@ -98,6 +79,22 @@ router.post("/signin", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+router.get("/getAllProfiles", async (req,res) => {
+  try{
+    const userProfiles = await User.find({});
+    if(userProfiles){
+      res.status(200).json({userProfiles});
+    }
+    else{
+      return res.status(400).json({error: "some error ocured"});
+    }
+  }
+  catch(err){
+    console.log(err);
+  }
+  
 });
 
 router.get("/profile", authenticate, (req, res) => {

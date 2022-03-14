@@ -10,15 +10,13 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import MenuIcon from '@mui/icons-material/Menu';
-import Button from '@mui/material/Button';
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'LeaderBoard', 'Logout'];
+import Cards from '../components/Cards';
 
 const Profile = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('TestName');
   const [img, setImg] = useState('img_not_found');  
+  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -74,11 +72,12 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    
     callProfilePage();
   }, []);
 
   return (
+    <>
+
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -142,6 +141,9 @@ const Profile = () => {
         </Toolbar>
       </Container>
     </AppBar>
+
+    <Cards />
+    </>
   );
 };
 

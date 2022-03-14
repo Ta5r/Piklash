@@ -1,13 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import FileBase from 'react-file-base64';
+import { useNavigate } from "react-router-dom";
 import { createPost } from "../actions/index";
 
 const Register = () => { 
+  const navigate = useNavigate();
   const [postData, setPostData] = useState({ name: '', email: '', phone: '', password: '',cpassword: '' ,selectedFile: '' });
   const handleSubmit = async (e) => {
     e.preventDefault();
     createPost(postData);
+    navigate('/');
   };
     return (
         <>
