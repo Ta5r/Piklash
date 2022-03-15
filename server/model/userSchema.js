@@ -28,6 +28,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  score: {
+    type: Number,
+    default: 0,
+    // required:true,
+  },
   tokens: [
     {
       token: {

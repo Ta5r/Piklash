@@ -1,3 +1,28 @@
+body{
+    background-color: rgb(246, 243, 231);
+}
+
+/* .loader:empty {
+    position: absolute;
+    top: calc(50% - 4em);
+    left: calc(50% - 4em);
+    width: 6em;
+    height: 6em;
+    border: 1.1em solid rgba(0, 0, 0, 0.2);
+    border-left: 1.1em solid #000000;
+    border-radius: 50%;
+    animation: load8 1.1s infinite linear;
+  }
+  
+  @keyframes load8 {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } */
+
 .card{
     position: relative;
     background-color: #fff;
@@ -7,5 +32,33 @@
     height: 50vh;
     border-radius: 20px;
     background-size: cover;
+    box-shadow: 0 3px 10px rgba(0 0 0 / 0.2);
+    background-color: rgb(223, 197, 54);
     background-position: center;
+}
+
+.tinderCards_cardContainer{
+    box-shadow: 0 3px 10px rgba(0 0 0 / 0.2);
+    display: flex;
+    justify-content: center;
+    margin-top: 10vh;
+    position: relative;
+    background-color: rgb(223, 197, 54);
+    /* background-image: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwallpapercave.com%2Fthats-all-folks-wallpapers&psig=AOvVaw1u5p6vX2ZIV_JH_ed6g4Rj&ust=1647336549021000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIDujIGlxfYCFQAAAAAdAAAAABAD"); */
+}
+
+.swipe{
+    position: absolute;
+}
+
+.cardContent{
+    width: 100%;
+    height: 100%;
+}
+
+.card h3{
+    position: absolute;
+    bottom: 0;
+    margin: 10px;
+    color: #fff;
 }

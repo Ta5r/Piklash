@@ -1,9 +1,10 @@
 import express from "express";
-import pkg from 'express';
+import pkg from "express";
 const { Router } = pkg;
 const app = express();
 const router = Router();
 import User from "../model/userSchema.js";
+import Swipe from "../model/swiped.js";
 
 import authenticate from "../middleware/authenticate.js";
 import "../db/conn.js";
@@ -18,8 +19,7 @@ router.post("/register", async (req, res) => {
   if (!name || !email || !phone || !password || !cpassword) {
     return res.status(422).json({ error: "plz fill all details" });
   }
-  if(!selectedFile)
-  {
+  if (!selectedFile) {
     console.log("File not recieved");
     return res.status(422).json({ error: "file not recieved" });
   }
@@ -37,10 +37,10 @@ router.post("/register", async (req, res) => {
         phone,
         password,
         cpassword,
-        selectedFile
+        selectedFile,
       });
       await user.save();
-      console.log("message: user registered successfully");
+      console.log("message: " + name + " registered successfully");
       res.status(201).json({ message: "user registered successfully" });
     }
   } catch (err) {
@@ -49,7 +49,6 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/signin", async (req, res) => {
-  
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -81,20 +80,103 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.get("/getAllProfiles", async (req,res) => {
-  try{
-    const userProfiles = await User.find({});
-    if(userProfiles){
-      res.status(200).json({userProfiles});
-    }
-    else{
-      return res.status(400).json({error: "some error ocured"});
-    }
+router.post("/swipe", async (req, res) => {
+  console.log("swipe route");
+  //registering swipe
+  const { swipedBy, swiped, direction } = req.body;
+  const swipe_obj = new Swipe({
+    swipedBy,
+    swiped,
+  });
+  await swipe_obj.save();
+  console.log("swipe registered");
+  //score
+  let new_score = 0;
+
+  const entity = await User.findOne({ _id: swiped });
+  console.log("entity score : " + entity.score);
+  if (direction === "left") {
+    new_score = entity.score - 1;
+  } else {
+    new_score = entity.score + 1;
   }
-  catch(err){
+  entity.score = new_score;
+  console.log("entity NEW score : " + entity.score);
+  await entity.save();
+  console.log("record updated");
+});
+
+router.get("/test/:id", async (req, res) => {
+  const user_id = req.params.id;
+  // res.status(200).send({ _id : user_id});
+  console.log("req params user ID -> "+user_id);
+  // -----
+  try {
+    const swiped = await Swipe.find({swipedBy:req.params.id});
+
+
+
+
+
+
+    console.log("TEST LOG"+swiped);
+
+
+
+
+
+
+
+    res.status(200).json({ swiped });
+
+
+    // const obj2 = await JSON.parse(swiped);
+    // try{
+    //   console.log("TRY START");
+    //   const obj2 = await JSON.parse(swiped);
+    //   console.log(obj2);
+    //   console.log("TRY ENDS");
+    // }
+    // catch(err)
+    // {
+    //   console.log("Encountered an ERROR : ",err,swiped);
+    // }
+    // const obj2 = swiped.json();
+    // console.log(obj.swiped[0]);
+    // console.log("obj2 start");
+    // console.log(obj2);
+    // console.log(obj2.swiped);
+    // console.log(obj2.swiped[0]);
+    // console.log("obj2 end");
+
+    // const userProfiles = await User.find({ _id : { "$ne":swiped.swiped}});
+    // res.status(200).json({ userProfiles});
+    // if (userProfiles) {
+    //   res.status(200).json({ userProfiles });
+    // } else {
+    //   return res.status(400).json({ error: "some error ocured" });
+    // }
+  } catch (err) {
     console.log(err);
   }
-  
+
+
+});
+
+router.get("/getAllProfiles/:id", async (req, res) => {
+
+  try {
+    const swiped = await Swipe.find({swipedBy:req.params.id});
+
+    const userProfiles = await User.find({});
+    if (userProfiles) {
+      res.status(200).json({ userProfiles });
+    } else {
+      return res.status(400).json({ error: "some error ocured" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.get("/profile", authenticate, (req, res) => {

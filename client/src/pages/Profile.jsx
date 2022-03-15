@@ -14,7 +14,8 @@ import Cards from '../components/Cards';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('TestName');
+  const [name, setName] = useState('Loading..');
+  const [myid, setMYID] = useState('0');
   const [img, setImg] = useState('img_not_found');  
   
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -36,10 +37,10 @@ const Profile = () => {
   };
 
   const redirect_profile = () => {
-    
+    navigate('/myprofile')
   }
   const redirect_leaderboard = () => {
-    
+    navigate('/leaderboard');
   }
   const redirect_logout = () => {
     navigate('/');
@@ -59,6 +60,7 @@ const Profile = () => {
       data = await data.json();
       console.log(data);      
       setName(data.name);
+      setMYID(data._id);
       setImg(data.selectedFile);
        if (!data.status === 200) {
         const error = new Error(data.error);
@@ -142,7 +144,7 @@ const Profile = () => {
       </Container>
     </AppBar>
 
-    <Cards />
+    <Cards myid={myid}/>
     </>
   );
 };
