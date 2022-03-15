@@ -28,8 +28,9 @@ function Cards(myid) {
 
   const setProfileVals = async () => {
     try {
-      console.log("Set Funciton Called");
+      console.log("Set Funciton Called by "+myid.myid);
       let data = await axios.get("/getAllProfiles/"+myid.myid);
+      console.log(data.data.userProfiles);
       setProfiles(data.data.userProfiles);
     } catch (err) {
       console.log(err);

@@ -109,17 +109,9 @@ router.post("/swipe", async (req, res) => {
 router.get("/test/:id", async (req, res) => {
   const user_id = req.params.id;
   // res.status(200).send({ _id : user_id});
-  console.log("req params user ID -> "+user_id);
+  console.log("req params user ID -> " + user_id);
   // -----
   try {
-    const swiped = await Swipe.find({swipedBy:req.params.id});
-
-
-
-
-
-
-    console.log("TEST LOG"+swiped);
 
 
 
@@ -127,53 +119,97 @@ router.get("/test/:id", async (req, res) => {
 
 
 
-    res.status(200).json({ swiped });
+    const swiped = await Swipe.find({ swipedBy: req.params.id });
+    let swiped_array = [];
+    swiped.map((test) => {
+      swiped_array.push(test.swiped);
+      // console.log("TEST log -> "+test.swiped);
+    });
+    // console.log("after push   "+swiped_array);
+    // console.log(swiped_array[0]);
+    // swiped_array.map((index)=>{
+    //   console.log(index);
+    // })
+
+    const userProfiles = await User.find({ _id: { $nin: swiped_array } });
+    // console.log(userProfiles);
+    console.log(swiped);
+    res.status(200).json({ userProfiles });
 
 
-    // const obj2 = await JSON.parse(swiped);
-    // try{
-    //   console.log("TRY START");
-    //   const obj2 = await JSON.parse(swiped);
-    //   console.log(obj2);
-    //   console.log("TRY ENDS");
-    // }
-    // catch(err)
-    // {
-    //   console.log("Encountered an ERROR : ",err,swiped);
-    // }
-    // const obj2 = swiped.json();
-    // console.log(obj.swiped[0]);
-    // console.log("obj2 start");
-    // console.log(obj2);
-    // console.log(obj2.swiped);
-    // console.log(obj2.swiped[0]);
-    // console.log("obj2 end");
 
-    // const userProfiles = await User.find({ _id : { "$ne":swiped.swiped}});
-    // res.status(200).json({ userProfiles});
-    // if (userProfiles) {
-    //   res.status(200).json({ userProfiles });
-    // } else {
-    //   return res.status(400).json({ error: "some error ocured" });
-    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   } catch (err) {
     console.log(err);
   }
 
-
+  //mongodb populate ?
 });
 
 router.get("/getAllProfiles/:id", async (req, res) => {
-
   try {
-    const swiped = await Swipe.find({swipedBy:req.params.id});
 
-    const userProfiles = await User.find({});
+
+
+
+
+
+
+
+
+
+
+
+    const swiped = await Swipe.find({ swipedBy: req.params.id });
+    let swiped_array = [];
+    swiped.map((test) => {
+      swiped_array.push(test.swiped);
+    });
+    const userProfiles = await User.find({ _id: { $nin: swiped_array } });
     if (userProfiles) {
+      // console.log(userProfiles);
+      console.log("userProfile NOT NULL");
       res.status(200).json({ userProfiles });
     } else {
       return res.status(400).json({ error: "some error ocured" });
     }
+    // res.status(200).json({ userProfiles });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   } catch (err) {
     console.log(err);
   }
