@@ -15,8 +15,8 @@ import Cards from '../components/Cards';
 const Profile = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('Loading..');
-  const [myid, setMYID] = useState('0');
-  const [img, setImg] = useState('img_not_found');  
+  const [myid, setMYID] = useState('');
+  const [img, setImg] = useState('');  
   
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

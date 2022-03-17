@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TinderCards from "react-tinder-card";
 import "./Cards.css";
+import { Image } from 'cloudinary-react';
 import axios from "axios";
 
 function Cards(myid) {
@@ -26,6 +27,8 @@ function Cards(myid) {
     console.log(id + " removed from the screen");
   };
 
+  console.log(myid.myid);
+
   const setProfileVals = async () => {
     try {
       console.log("Set Funciton Called by "+myid.myid);
@@ -39,7 +42,7 @@ function Cards(myid) {
 
   useEffect(() => {
     setProfileVals();
-  }, []);
+  }, [myid.myid]);
 
   return (
     <div className="tinderCards">
@@ -52,12 +55,16 @@ function Cards(myid) {
             onSwipe={(dir) => swiped(dir, person._id)}
             onCardLeftScreen={() => outOfFrame(person._id)}
           >
-            <div
+          <Image
+          className = "card"
+          cloudName = "dfoxozwkm"
+          publicID = {person.selectedFile} />
+            {/* <div
               style={{ backgroundImage: "url(" + person.selectedFile + ")" }}
               className="card"
             >
               <h3>{person.name}</h3>
-            </div>
+            </div> */}
           </TinderCards>
         ))}
       </div>

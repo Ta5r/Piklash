@@ -33,7 +33,7 @@ body{
     border-radius: 20px;
     background-size: cover;
     box-shadow: 0 3px 10px rgba(0 0 0 / 0.2);
-    background-color: rgb(223, 197, 54);
+    /* background-color: rgb(223, 197, 54); */
     background-position: center;
 }
 

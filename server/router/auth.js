@@ -183,15 +183,11 @@ router.get("/getAllProfiles/:id", async (req, res) => {
       swiped_array.push(test.swiped);
     });
     const userProfiles = await User.find({ _id: { $nin: swiped_array } });
-    if (userProfiles) {
-      // console.log(userProfiles);
-      console.log("userProfile NOT NULL");
+    if (userProfiles && userProfiles.length) {
       res.status(200).json({ userProfiles });
     } else {
       return res.status(400).json({ error: "some error ocured" });
     }
-    // res.status(200).json({ userProfiles });
-
 
 
 
