@@ -63,12 +63,12 @@ const Register = () => {
     console.log(postData);
     setPostData({ ...postData, selectedFile: cloudinary_res.data.url });
 
-    // if (postData["selectedFile"]) {
-    //   createPost(postData);
-    // } else {
-    //   console.log("Operation Taking Time ...");
-    // }
-    // navigate("/login");
+    if (postData["selectedFile"]) {
+      createPost(postData);
+    } else {
+      console.log("Operation Taking Time ...");
+    }
+    navigate("/login");
   };
   return (
     <>
@@ -123,7 +123,6 @@ const Register = () => {
         <input
           type="file"
           onChange={(event) => {
-            // setImgFile(event.target.files[0]);
             uploadImg(event.target.files[0]);
           }}
         />

@@ -1,11 +1,10 @@
-  // import { Schema, model } from "mongoose";
-// import { sign } from "jsonwebtoken";
 import pkg from 'mongoose';
 import jwt from 'jsonwebtoken';
 const { Schema, model } = pkg;
 const { sign } = jwt;
-
-const SECRET_KEY = "OWMRWLERTJFSNCYJANCSFGHASXZRWQURCVSFDDHJ";
+import dotenv from "dotenv";
+dotenv.config({});
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const userSchema = new Schema({
   name: {
@@ -31,7 +30,6 @@ const userSchema = new Schema({
   score: {
     type: Number,
     default: 0,
-    // required:true,
   },
   tokens: [
     {
@@ -42,10 +40,6 @@ const userSchema = new Schema({
     },
   ],
   selectedFile: String,
-  // image:{
-  //   type: String,
-  //   required: true,
-  // },
 });
 
 userSchema.methods.generateAuthToken = async function () {

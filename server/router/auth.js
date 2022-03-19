@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
   const { name, email, phone, password, cpassword, selectedFile } = req.body;
   //validation
   if (!name || !email || !phone || !password || !cpassword) {
-    return res.status(422).json({ error: "plz fill all details" });
+    return res.status(422).json({ error: "please fill all details" });
   }
   if (!selectedFile) {
     console.log("File not recieved");
@@ -108,75 +108,23 @@ router.post("/swipe", async (req, res) => {
 
 router.get("/test/:id", async (req, res) => {
   const user_id = req.params.id;
-  // res.status(200).send({ _id : user_id});
-  console.log("req params user ID -> " + user_id);
-  // -----
   try {
-
-
-
-
-
-
-
     const swiped = await Swipe.find({ swipedBy: req.params.id });
     let swiped_array = [];
     swiped.map((test) => {
       swiped_array.push(test.swiped);
-      // console.log("TEST log -> "+test.swiped);
     });
-    // console.log("after push   "+swiped_array);
-    // console.log(swiped_array[0]);
-    // swiped_array.map((index)=>{
-    //   console.log(index);
-    // })
 
     const userProfiles = await User.find({ _id: { $nin: swiped_array } });
-    // console.log(userProfiles);
     console.log(swiped);
     res.status(200).json({ userProfiles });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   } catch (err) {
     console.log(err);
   }
-
-  //mongodb populate ?
 });
 
 router.get("/getAllProfiles/:id", async (req, res) => {
   try {
-
-
-
-
-
-
-
-
-
-
-
-
     const swiped = await Swipe.find({ swipedBy: req.params.id });
     let swiped_array = [];
     swiped.map((test) => {
@@ -188,24 +136,6 @@ router.get("/getAllProfiles/:id", async (req, res) => {
     } else {
       return res.status(400).json({ error: "some error ocured" });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   } catch (err) {
     console.log(err);
   }

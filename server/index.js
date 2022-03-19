@@ -1,9 +1,7 @@
-// var express = require("express");
 import express from 'express';
 import cors from 'cors';
 var app = express();
 import router from '../server/router/auth.js';
-// require("./db/conn");
 import "../server/db/conn.js";
 app.use(cors());
 app.use(express.json({limit:"10mb"}));

@@ -1,8 +1,6 @@
 import pkg from "mongoose";
 const { Schema, model } = pkg;
 
-const SECRET_KEY = "OWMRWLERTJFSNCYJANCSFGHASXZRWQURCVSFDDHJ";
-
 const swipeSchema = new Schema({
   swipedBy: {
     type: String,

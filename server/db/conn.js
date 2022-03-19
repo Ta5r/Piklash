@@ -1,10 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-// const conn = () =>{
-  // const mongoose = require("mongoose");
- const DATABASE="mongodb+srv://piklash21:PIKlash21@cluster0.gfltb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-  mongoose
-  .connect(DATABASE, {
+dotenv.config({});
+
+const db = process.env.MONGO_URI;
+mongoose
+  .connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -12,8 +13,6 @@ import mongoose from 'mongoose';
     console.log("connection successful");
   })
   .catch((err) => {
+    console.log("Following error occured : ");
     console.log(err);
   });
-// };
-
-// export default conn; 
