@@ -145,4 +145,11 @@ router.get("/profile", authenticate, (req, res) => {
   res.send(req.rootUser);
 });
 
+router.get("/leaderboard", async function (req, res) {
+  console.log("Getting LeaderBoard ");
+  // let lim = 10;
+  const rankList = await User.find().sort({ score: -1 });
+  res.status(200).json({ rankList });
+});
+
 export default router;
