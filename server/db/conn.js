@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
-DATABASE="mongodb+srv://piklash21:PIKlash21@cluster0.gfltb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const dotenv = require("dotenv");
+
+dotenv.config({});
+
 mongoose
-  .connect(DATABASE, {
+  .connect(process.env.NEW_URI1, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -9,5 +12,5 @@ mongoose
     console.log("connection successful");
   })
   .catch((err) => {
-    console.log(err);
+    console.log("Some error occured "+err);
   });

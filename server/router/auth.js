@@ -117,12 +117,19 @@ router.post("/signin", async (req, res) => {
     // console.log("got 2 -> "+req.body);
 
     const { email, password } = req.body;
-    // console.log("EMAIILLL : "+email);
+    console.log("EMAIILLL : "+email);
+    console.log("Password : "+password);
+
+
+    User.findOne({ 'email': email }, function (err, user_data) {
+      console.log("USER DATTA : "+user_data);
+    });
+
     if (!email || !password) {
       return res.status(400).json({ error: "EMAIL / PASSWORD required" });
     } else {
       const userLogin = await User.findOne({ email: email });
-      // console.log("userLogin -> "+userLogin);
+      console.log("userLogin -> "+userLogin);
       // console.log("userLogin.name -> "+userLogin.name);
 
       if (userLogin) {
